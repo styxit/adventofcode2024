@@ -1,0 +1,36 @@
+{
+    "name": "styxit/adventofcode2024",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Styxit",
+            "email": "info@styxit.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.3",
+        "symfony/console": "^7.2",
+        "illuminate/collections": "^11.34"
+    },
+    "autoload": {
+        "psr-4": {
+            "Styxit\\": "./src",
+            "Puzzles\\": "./puzzles"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": { 
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": [
+            "./vendor/bin/phpunit --testdox"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.4",
+        "symfony/var-dumper": "^7.2",
+        "friendsofphp/php-cs-fixer": "^3.65"
+    }
+}
