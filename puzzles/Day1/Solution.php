@@ -10,10 +10,11 @@ class Solution implements PuzzleSolutionInterface
     /**
      * Find the solution for part 1.
      */
-    public function solution1(Input $input)
+    public function solution1(Input $input): int
     {
         $lists = $input->collection()
-            ->map(fn ($row) => collect(explode(' ', $row))->filter());
+            ->map(fn ($row) => collect(array_map(fn ($nr) => (int) $nr, explode(' ', $row)))->filter());
+
         // Sorted lists.
         $listOne = $lists->map->first()->sort()->values();
         $listTwo = $lists->map->last()->sort()->values();
@@ -21,7 +22,7 @@ class Solution implements PuzzleSolutionInterface
         // Combine the lists.
         return $listOne->zip($listTwo)
             // Calculate the spread between the pairs.
-            ->map(fn ($pair) => abs($pair->first() - $pair->last()))
+            ->map(fn ($pair) => abs(($pair->first() ?: 0) - ($pair->last() ?: 0)))
             // Sum the spread.
             ->sum();
     }
@@ -29,9 +30,11 @@ class Solution implements PuzzleSolutionInterface
     /**
      * Find the solution for part 2.
      */
-    public function solution2(Input $input)
+    public function solution2(Input $input): int
     {
-        $lists = $input->collection()->map(fn ($row) => collect(explode(' ', $row))->filter());
+        $lists = $input->collection()
+            ->map(fn ($row) => collect(array_map(fn ($nr) => (int) $nr, explode(' ', $row)))->filter());
+
         // Lists, not sorted.
         $listOne = $lists->map->first()->values();
         $listTwo = $lists->map->last()->values();

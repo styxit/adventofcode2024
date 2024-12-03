@@ -7,9 +7,9 @@ namespace Tests\Solutions;
  */
 class Day1Test extends AbstractDayTester
 {
-    protected $solutionPart1 = 3246517;
-    protected $solutionPart2 = 29379307;
+    protected int $solutionPart1 = 3246517;
+    protected int $solutionPart2 = 29379307;
 
-    protected $exampleSolution1 = 11;
-    protected $exampleSolution2 = 31;
+    protected int $exampleSolution1 = 11;
+    protected int $exampleSolution2 = 31;
 }

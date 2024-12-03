@@ -10,7 +10,7 @@ class Solution implements PuzzleSolutionInterface
     /**
      * Find the solution for part 1.
      */
-    public function solution1(Input $input)
+    public function solution1(Input $input): int
     {
         $reports = $input->collection()
             ->map(fn ($report) => array_map(fn ($nr) => (int) $nr, explode(' ', $report)))
@@ -23,7 +23,7 @@ class Solution implements PuzzleSolutionInterface
     /**
      * Find the solution for part 2.
      */
-    public function solution2(Input $input)
+    public function solution2(Input $input): int
     {
         // Group reports in safe and unsafe.
         [$safeReports, $unsafeReports] = $input->collection()
@@ -50,6 +50,13 @@ class Solution implements PuzzleSolutionInterface
         return $safeReports->count() + $fixedReports->count();
     }
 
+    /**
+     * Undocumented function.
+     *
+     * @param int[] $report
+     *
+     * @return bool
+     */
     private function reportIsSafe(array $report): bool
     {
         // Use the first two levels to determine if this is an increasing or decreasing report.

@@ -12,33 +12,33 @@ abstract class AbstractDayTester extends TestCase
 {
     public const SOLUTION_CLASS = 'Puzzles\Day%d\Solution';
 
-    protected $solutionPart1 = 0;
-    protected $solutionPart2 = 0;
+    protected int $solutionPart1 = 0;
+    protected int $solutionPart2 = 0;
 
-    protected $exampleSolution1 = 0;
-    protected $exampleSolution2 = 0;
+    protected int $exampleSolution1 = 0;
+    protected int $exampleSolution2 = 0;
 
-    public function testExample1()
+    public function testExample1(): void
     {
         $this->executeAndAssert(1, true);
     }
 
-    public function testExample2()
+    public function testExample2(): void
     {
         $this->executeAndAssert(2, true);
     }
 
-    public function testSolution1()
+    public function testSolution1(): void
     {
         $this->executeAndAssert(1);
     }
 
-    public function testSolution2()
+    public function testSolution2(): void
     {
         $this->executeAndAssert(2);
     }
 
-    private function executeAndAssert(int $part, $example = false)
+    private function executeAndAssert(int $part, bool $example = false): void
     {
         $puzzleSolution = $this->getSolutionClass();
         $input = $this->getPuzzleInput($part, $example);

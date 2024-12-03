@@ -6,7 +6,7 @@ class Puzzle
 {
     public function __construct(private PuzzleSolutionInterface $solution) {}
 
-    public function solve(PuzzlePart $part, Input $input)
+    public function solve(PuzzlePart $part, Input $input): int
     {
         return match ($part) {
             PuzzlePart::ONE => $this->solution->solution1($input),

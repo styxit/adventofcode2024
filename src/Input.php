@@ -12,17 +12,14 @@ class Input
     private string $plain = '';
 
     /**
-     * @var string The plain text input.
+     * @var string[] Array with the lines from the input.
      */
     private array $lines = [];
 
     /**
      * Loader constructor.
-     *
-     * @param string $input       The full path to the input file to load.
-     * @param mixed  $inputString
      */
-    public function __construct($inputString)
+    public function __construct(string $inputString)
     {
         $this->plain = trim($inputString, "\n\r\t\v\x00");
         $this->lines = explode(PHP_EOL, $this->plain);
@@ -41,7 +38,7 @@ class Input
     /**
      * Get the input as a collection.
      *
-     * @return Collection Collection with each line as an item.
+     * @return Collection<int, string> Collection with each line as an item.
      */
     public function collection()
     {
