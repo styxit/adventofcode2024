@@ -26,6 +26,11 @@
     "scripts": {
         "test": [
             "./vendor/bin/phpunit --testdox"
+        ],
+        "check": [
+            "./vendor/bin/php-cs-fixer fix --show-progress none",
+            "./vendor/bin/phpstan analyse --no-progress",
+            "./vendor/bin/phpunit --no-progress"
         ]
     },
     "require-dev": {
