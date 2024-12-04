@@ -20,9 +20,10 @@ class Solution implements PuzzleSolutionInterface
     {
         $instructions = $this->getInstructions($input->plain());
 
-        return $instructions
-            ->map(fn (InstructionInterface $instruction) => $instruction->handle())
-            ->sum();
+        $results = $instructions
+            ->map(fn (InstructionInterface $instruction) => $instruction->handle());
+
+        return (int) array_sum($results->toArray());
     }
 
     /**
@@ -50,9 +51,10 @@ class Solution implements PuzzleSolutionInterface
             return $doInstruction;
         });
 
-        return $instructions
-            ->map(fn (InstructionInterface $instruction) => $instruction->handle())
-            ->sum();
+        $results = $instructions
+            ->map(fn (InstructionInterface $instruction) => $instruction->handle());
+
+        return (int) array_sum($results->toArray());
     }
 
     /**

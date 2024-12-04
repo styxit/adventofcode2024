@@ -20,11 +20,11 @@ class Solution implements PuzzleSolutionInterface
         $listTwo = ($lists->map->last() ?: collect())->sort()->values();
 
         // Combine the lists.
-        return $listOne->zip($listTwo)
+        $spreads = $listOne->zip($listTwo)
             // Calculate the spread between the pairs.
-            ->map(fn ($pair) => (int) abs(($pair->first() ?: 0) - ($pair->last() ?: 0)))
-            // Sum the spread.
-            ->sum();
+            ->map(fn ($pair) => (int) abs(($pair->first() ?: 0) - ($pair->last() ?: 0)));
+
+        return (int) array_sum($spreads->toArray());
     }
 
     /**
@@ -42,6 +42,6 @@ class Solution implements PuzzleSolutionInterface
         // Each number in the left list, multiplied by the times it appears in the right list.
         $similarityScores = $listOne->map(fn ($number) => $number * $listTwo->filter(fn ($numberTwo) => $numberTwo === $number)->count());
 
-        return $similarityScores->sum();
+        return (int) array_sum($similarityScores->toArray());
     }
 }
