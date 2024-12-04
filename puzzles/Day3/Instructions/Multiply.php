@@ -11,6 +11,6 @@ class Multiply implements InstructionInterface
 
     public function handle(): ?int
     {
-        return array_product($this->arguments);
+        return (int) array_product($this->arguments);
     }
 }

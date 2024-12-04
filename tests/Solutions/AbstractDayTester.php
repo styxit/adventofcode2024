@@ -83,6 +83,10 @@ abstract class AbstractDayTester extends TestCase
     {
         $solutionClass = sprintf(self::SOLUTION_CLASS, $this->getPuzzleDay());
 
+        if (!is_a($solutionClass, PuzzleSolutionInterface::class, true)) {
+            throw new \InvalidArgumentException('The puzzle solution does not implement PuzzleSolutionInterface');
+        }
+
         return new $solutionClass();
     }
 }

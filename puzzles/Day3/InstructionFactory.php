@@ -11,8 +11,8 @@ class InstructionFactory
 {
     public static function make(string $instruction): InstructionInterface
     {
-        $instructionName = preg_replace('/[^a-z]+/', '', $instruction);
-        $arguments = explode(',', preg_replace(
+        $instructionName = (string) preg_replace('/[^a-z]+/', '', $instruction);
+        $arguments = explode(',', (string) preg_replace(
             ['/.+\(/', '/\)/'],
             '',
             $instruction

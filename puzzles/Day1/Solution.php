@@ -16,13 +16,13 @@ class Solution implements PuzzleSolutionInterface
             ->map(fn ($row) => collect(array_map(fn ($nr) => (int) $nr, explode(' ', $row)))->filter());
 
         // Sorted lists.
-        $listOne = $lists->map->first()->sort()->values();
-        $listTwo = $lists->map->last()->sort()->values();
+        $listOne = ($lists->map->first() ?: collect())->sort()->values();
+        $listTwo = ($lists->map->last() ?: collect())->sort()->values();
 
         // Combine the lists.
         return $listOne->zip($listTwo)
             // Calculate the spread between the pairs.
-            ->map(fn ($pair) => abs(($pair->first() ?: 0) - ($pair->last() ?: 0)))
+            ->map(fn ($pair) => (int) abs(($pair->first() ?: 0) - ($pair->last() ?: 0)))
             // Sum the spread.
             ->sum();
     }
@@ -36,8 +36,8 @@ class Solution implements PuzzleSolutionInterface
             ->map(fn ($row) => collect(array_map(fn ($nr) => (int) $nr, explode(' ', $row)))->filter());
 
         // Lists, not sorted.
-        $listOne = $lists->map->first()->values();
-        $listTwo = $lists->map->last()->values();
+        $listOne = ($lists->map->first() ?: collect())->values();
+        $listTwo = ($lists->map->last() ?: collect())->values();
 
         // Each number in the left list, multiplied by the times it appears in the right list.
         $similarityScores = $listOne->map(fn ($number) => $number * $listTwo->filter(fn ($numberTwo) => $numberTwo === $number)->count());

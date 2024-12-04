@@ -95,6 +95,9 @@ class SolvePuzzleCommand extends Command
         if (!class_exists($solutionClass)) {
             throw new \InvalidArgumentException('No solution found for day '.$day);
         }
+        if (!is_a($solutionClass, PuzzleSolutionInterface::class, true)) {
+            throw new \InvalidArgumentException('The puzzle solution does not implement PuzzleSolutionInterface');
+        }
 
         // Create solution instance.
         return new $solutionClass();
