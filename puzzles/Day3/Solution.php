@@ -2,6 +2,10 @@
 
 namespace Puzzles\Day3;
 
+use Illuminate\Support\Collection;
+use Puzzles\Day3\Instructions\Dont;
+use Puzzles\Day3\Instructions\Doo;
+use Puzzles\Day3\Instructions\InstructionInterface;
 use Styxit\Input;
 use Styxit\PuzzleSolutionInterface;
 
@@ -14,27 +18,11 @@ class Solution implements PuzzleSolutionInterface
      */
     public function solution1(Input $input): int
     {
-        // Extract valid instructions from the input.
-        preg_match_all(
-            self::INSTRUCTION_REGEX,
-            $input->plain(),
-            $matches
-        );
+        $instructions = $this->getInstructions($input->plain());
 
-        // Parse and execute the instructions.
-        $products = collect($matches[0])->map(function ($instruction) {
-            // Extract all numbers from the instruction.
-            preg_match_all(
-                '/\d+/',
-                $instruction,
-                $numbers
-            );
-
-            // Return the product of the numbers.
-            return array_product($numbers[0]);
-        });
-
-        return $products->sum();
+        return $instructions
+            ->map(fn (InstructionInterface $instruction) => $instruction->handle())
+            ->sum();
     }
 
     /**
@@ -42,6 +30,48 @@ class Solution implements PuzzleSolutionInterface
      */
     public function solution2(Input $input): int
     {
-        return 0;
+        $instructions = $this->getInstructions($input->plain());
+
+        $doInstruction = true;
+
+        // Only keep instructions that come after a "do" instruction.
+        $instructions = $instructions->filter(function ($instruction) use (&$doInstruction) {
+            if (is_a($instruction, Doo::class)) {
+                $doInstruction = true;
+
+                return false;
+            }
+            if (is_a($instruction, Dont::class)) {
+                $doInstruction = false;
+
+                return false;
+            }
+
+            return $doInstruction;
+        });
+
+        return $instructions
+            ->map(fn (InstructionInterface $instruction) => $instruction->handle())
+            ->sum();
+    }
+
+    /**
+     * Undocumented function.
+     *
+     * @param string $input
+     *
+     * @return Collection<int, InstructionInterface>
+     */
+    private function getInstructions(string $input): Collection
+    {
+        preg_match_all(
+            '/mul\(\d{1,3},\d{1,3}\)|do\(\)|don\'t\(\)/',
+            $input,
+            $matches
+        );
+
+        return collect($matches[0])->map(function ($instruction) {
+            return InstructionFactory::make($instruction);
+        });
     }
 }
